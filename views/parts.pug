@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= title
+  if part_list.length
+    ul
+      each part in part_list
+        li
+          a(href=part.url) #{part.title}
+          //|  (#{part.author.name})
+
+  else
+    p There are no books.

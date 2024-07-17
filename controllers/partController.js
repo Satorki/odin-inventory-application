@@ -4,18 +4,24 @@ const asyncHandler = require("express-async-handler");
 exports.index = asyncHandler(async (req, res, next) => {
   const [numParts, numCategories] = await Promise.all([
     Part.countDocuments({}).exec(),
-    Category.countDocuments({}).exec(),
+    // Category.countDocuments({}).exec(),
   ]);
 
   res.render("index", {
     title: "Computer Parts Shop",
+    nothing: 2,
     part_count: numParts,
     category_count: numCategories,
   });
 });
 
 exports.part_list = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Part list");
+  const allParts = await Part.find({}, "Part name")
+    .sort({ title: 1 })
+    .populate("name")
+    .exec();
+
+  res.render("part_list", { title: "Part list", part_list: allParts });
 });
 
 exports.part_detail = asyncHandler(async (req, res, next) => {
