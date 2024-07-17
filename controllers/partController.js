@@ -38,6 +38,7 @@ exports.part_detail = asyncHandler(async (req, res, next) => {
   }
 
   res.render("part_detail", {
+    title: part.name,
     name: part.name,
     part: part,
   });

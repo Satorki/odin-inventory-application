@@ -2,12 +2,11 @@ extends layout
 
 block content
   h1= title
-  if category_list.length
+  if list_categories.length
     ul
-      each category in category_list
+      each category in list_categories
         li
           a(href=category.url) #{category.name}
-          //|  (#{part.author.name})
 
   else
     p There are no Categories.

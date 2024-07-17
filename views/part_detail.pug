@@ -1,10 +1,10 @@
 extends layout
 
 block content
-  h1 Name: #{part.title}
+  h1 Part Name: #{title}
 
   p #[strong description:] #{part.description}
-  p #[strong price:] #{part.price}
+  p #[strong price:] #{part.price} $
   p #[strong stock: ] #{part.stock}
   p #[strong Category: ]
     each val, index in part.category

@@ -6,13 +6,26 @@ const { body, validationResult } = require("express-validator");
 exports.category_list = asyncHandler(async (req, res, next) => {
   const allCategories = await Category.find().sort({ name: 1 }).exec();
   res.render("category_list", {
-    title: "category List",
+    title: "Category List",
     list_categories: allCategories,
   });
 });
 
 exports.category_detail = asyncHandler(async (req, res, next) => {
-  res.send(`NOT IMPLEMENTED: category detail: ${req.params.id}`);
+  const [category] = await Promise.all([
+    Category.findById(req.params.id).populate("name").exec(),
+  ]);
+
+  if (category === null) {
+    const err = new Error("category not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("category_detail", {
+    title: category.name,
+    category: category,
+  });
 });
 
 exports.category_create_get = (req, res, next) => {
