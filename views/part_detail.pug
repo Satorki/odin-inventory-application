@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 Name: #{part.title}
+
+  p #[strong description:] #{part.description}
+  p #[strong price:] #{part.price}
+  p #[strong stock: ] #{part.stock}
+  p #[strong Category: ]
+    each val, index in part.category
+      a(href=val.url) #{val.name}
+      if index < part.category.length - 1
+        |,&nbsp;

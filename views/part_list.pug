@@ -6,8 +6,7 @@ block content
     ul
       each part in part_list
         li
-          a(href=part.url) #{part.title}
-          //|  (#{part.author.name})
+          a(href=part.url) #{part.name}
 
   else
     p There are no books.

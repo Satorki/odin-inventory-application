@@ -11,7 +11,6 @@ exports.index = asyncHandler(async (req, res, next) => {
 
   res.render("index", {
     title: "Computer Parts Shop",
-    nothing: 2,
     part_count: numParts,
     category_count: numCategories,
   });
@@ -19,7 +18,7 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 exports.part_list = asyncHandler(async (req, res, next) => {
   const allParts = await Part.find({}, "Part name")
-    .sort({ title: 1 })
+    .sort({ name: 1 })
     .populate("name")
     .exec();
 
@@ -27,7 +26,21 @@ exports.part_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.part_detail = asyncHandler(async (req, res, next) => {
-  res.send(`NOT IMPLEMENTED: Part detail: ${req.params.id}`);
+  const [part] = await Promise.all([
+    Part.findById(req.params.id).populate("name").populate("category").exec(),
+  ]);
+
+  if (part === null) {
+    // No results.
+    const err = new Error("part not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("part_detail", {
+    name: part.name,
+    part: part,
+  });
 });
 
 exports.part_create_get = asyncHandler(async (req, res, next) => {
