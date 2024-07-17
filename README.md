@@ -1,6 +1,6 @@
-# ODIN INVETORY APPLICATION 
+# ODIN INVENTORY APPLICATION 
 
-Simple application for the odin project tutorial about inventory.
+Simple application for the odin project tutorial.
 
 ## Built with
 - Express
